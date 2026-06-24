@@ -9,17 +9,17 @@
   <body>
     <header class="topbar">
       <div>
-        <p class="eyebrow">Shamrock · статическая демо-версия</p>
+        <p class="eyebrow">Shamrock · учебная демо-версия</p>
         <h1>AI-помощник среднего чека</h1>
-        <p class="lead">Показывает владельцу, как будет выглядеть панель допродаж без backend, базы и Telegram-токена.</p>
+        <p class="lead">Тренажер для общепита: сотрудник получает простую подсказку по допродаже, а владелец видит контроль без постоянных напоминаний персоналу.</p>
       </div>
-      <a class="primary-link" href="#recommendation">Проверить рекомендацию</a>
+      <a class="primary-link" href="#bartender-mode">Открыть режим бармена</a>
     </header>
 
     <main class="shell">
       <section class="notice">
-        <strong>Это демо для Vercel.</strong>
-        Данные не сохраняются и обновятся после перезагрузки страницы. Настоящее сохранение появится только во второй версии с backend и базой.
+        <strong>Учебная безопасная версия.</strong>
+        Здесь нет реальных гостей, без реальных телефонов, без базы клиентов, без API-ключей, без платежей и без подключения к кассе. Все цифры ниже — демо для проверки логики.
       </section>
 
       <section class="metrics" aria-label="Показатели за сегодня">
@@ -51,67 +51,115 @@
 
       <section class="grid two">
         <article class="panel">
-          <span class="panel-label">Лучший бармен</span>
-          <h2>Иван</h2>
-          <p>6 рекомендаций, 3 покупки, 1 110 ₽ допродаж.</p>
+          <span class="panel-label">Владелец видит контроль</span>
+          <h2>Кто предлагает и что приносит деньги</h2>
+          <p>Панель показывает выполнение рекомендаций, конверсию в покупку, сумму допродажи и позиции, которые лучше всего помогают поднять средний чек.</p>
         </article>
         <article class="panel">
-          <span class="panel-label">Лучшая позиция</span>
-          <h2>Куриные крылья</h2>
-          <p>Хорошо срабатывают для гостей, которые часто берут IPA.</p>
+          <span class="panel-label">Сотрудник видит действие</span>
+          <h2>Одна подсказка вместо аналитики</h2>
+          <p>Бармену, официанту или кассиру не нужно читать отчеты. Он выбирает учебного гостя, получает фразу и нажимает результат.</p>
         </article>
       </section>
 
-      <section class="grid two" id="recommendation">
-        <article class="panel recommendation-card">
-          <div class="card-head">
-            <div>
-              <span class="panel-label">Карточка гостя</span>
-              <h2>Алексей</h2>
-            </div>
-            <span class="badge">постоянный гость</span>
+      <section class="panel" id="bartender-mode">
+        <div class="section-head">
+          <div>
+            <span class="panel-label">Режим бармена</span>
+            <h2>Выбери учебного гостя и получи подсказку</h2>
           </div>
-          <dl class="guest-facts">
-            <div><dt>Средний чек</dt><dd>1 100 ₽</dd></div>
-            <div><dt>Визитов</dt><dd>8</dd></div>
-            <div><dt>Любит</dt><dd>IPA, гренки</dd></div>
-            <div><dt>Последний визит</dt><dd>7 дней назад</dd></div>
-          </dl>
+          <span class="badge">работает внутри панели владельца</span>
+        </div>
+
+        <div class="scenario-grid" aria-label="Учебные сценарии общепита">
+          <button class="scenario-card is-active" data-scenario="bar">
+            <strong>Бар</strong>
+            <span>IPA → крылья</span>
+          </button>
+          <button class="scenario-card" data-scenario="cafe">
+            <strong>Кафе</strong>
+            <span>Обед → десерт</span>
+          </button>
+          <button class="scenario-card" data-scenario="restaurant">
+            <strong>Ресторан</strong>
+            <span>Компания → сет</span>
+          </button>
+          <button class="scenario-card" data-scenario="coffee">
+            <strong>Кофейня</strong>
+            <span>Капучино → круассан</span>
+          </button>
+        </div>
+
+        <div class="grid two recommendation-grid">
+          <article class="subpanel">
+            <span class="panel-label">Учебная карточка</span>
+            <h3 id="guest-name">Гость A</h3>
+            <dl class="guest-facts">
+              <div><dt>Средний чек</dt><dd id="guest-average">1 100 ₽</dd></div>
+              <div><dt>Контекст</dt><dd id="guest-context">один за баром</dd></div>
+              <div><dt>Любит</dt><dd id="guest-likes">IPA, закуски</dd></div>
+              <div><dt>Цель</dt><dd id="guest-goal">добавить кухню к напитку</dd></div>
+            </dl>
+          </article>
+
+          <article class="subpanel">
+            <span class="panel-label">Подсказка сотруднику</span>
+            <h3 id="recommendation-title">Предложить: куриные крылья</h3>
+            <p id="recommendation-reason">Гость берет IPA. Крылья подходят к вкусу и могут увеличить чек на 350 ₽.</p>
+            <blockquote id="recommendation-phrase">К этому IPA хорошо зайдут крылья. Добавить порцию?</blockquote>
+            <div class="result-actions" aria-label="Результат рекомендации">
+              <button data-result="offered">Предложил</button>
+              <button data-result="bought" data-amount="350" id="bought-button">Купил</button>
+              <button data-result="rejected">Отказался</button>
+              <button data-result="not_offered">Не предложил</button>
+            </div>
+            <p class="status-line" id="status-line">Нажми результат, чтобы увидеть, как меняются цифры владельца.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid two">
+        <article class="panel">
+          <span class="panel-label">Универсальные сценарии</span>
+          <h2>Не только бар</h2>
+          <ul class="list">
+            <li><strong>Бар</strong><span>напиток → закуска к пиву</span></li>
+            <li><strong>Кафе</strong><span>обед → десерт или напиток</span></li>
+            <li><strong>Ресторан</strong><span>компания → сет или общая закуска</span></li>
+            <li><strong>Кофейня</strong><span>кофе → выпечка или сироп</span></li>
+          </ul>
         </article>
 
-        <article class="panel recommendation-card">
-          <span class="panel-label">Подсказка бармену</span>
-          <h2>Предложить: куриные крылья</h2>
-          <p>Гость часто берет IPA, но не всегда добавляет еду. Крылья подходят к IPA и могут увеличить чек на 350 ₽.</p>
-          <blockquote>К этому IPA хорошо зайдут крылья. Добавить порцию?</blockquote>
-          <div class="result-actions" aria-label="Результат рекомендации">
-            <button data-result="offered">Предложил</button>
-            <button data-result="bought" data-amount="350">Купил</button>
-            <button data-result="rejected">Отказался</button>
-            <button data-result="not_offered">Не предложил</button>
-          </div>
-          <p class="status-line" id="status-line">Нажми результат, чтобы увидеть, как меняются цифры.</p>
+        <article class="panel">
+          <span class="panel-label">Что убрали из учебной версии</span>
+          <h2>Меньше риска на старте</h2>
+          <ul class="list">
+            <li><strong>Нет персональных данных</strong><span>только Гость A, B, C</span></li>
+            <li><strong>Нет базы клиентов</strong><span>ничего не хранится навсегда</span></li>
+            <li><strong>Нет API-ключей</strong><span>нечему утекать в GitHub</span></li>
+            <li><strong>Нет платежей</strong><span>не трогаем деньги и кассу</span></li>
+          </ul>
         </article>
       </section>
 
       <section class="panel">
         <div class="section-head">
           <div>
-            <span class="panel-label">Гости</span>
-            <h2>Кого видит бармен</h2>
+            <span class="panel-label">Демо-гости</span>
+            <h2>Без реальных телефонов и фамилий</h2>
           </div>
-          <span class="muted">демо-данные</span>
+          <span class="muted">данные сбрасываются после перезагрузки</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>Имя</th><th>Телефон</th><th>Средний чек</th><th>Визиты</th><th>Любит</th><th>Последний визит</th></tr>
+              <tr><th>Гость</th><th>Сценарий</th><th>Средний чек</th><th>Что любит</th><th>Что предложить</th></tr>
             </thead>
             <tbody>
-              <tr><td>Алексей</td><td>+7 900 111-22-33</td><td>1 100 ₽</td><td>8</td><td>IPA, гренки</td><td>7 дней назад</td></tr>
-              <tr><td>Сергей</td><td>+7 900 222-33-44</td><td>850 ₽</td><td>5</td><td>лагер</td><td>3 дня назад</td></tr>
-              <tr><td>Ильдар</td><td>+7 900 333-44-55</td><td>1 600 ₽</td><td>11</td><td>темное пиво, мясо</td><td>12 дней назад</td></tr>
-              <tr><td>Андрей</td><td>+7 900 444-55-66</td><td>1 800 ₽</td><td>6</td><td>компания, мясо</td><td>2 дня назад</td></tr>
+              <tr><td>Гость A</td><td>Бар</td><td>1 100 ₽</td><td>IPA</td><td>Куриные крылья</td></tr>
+              <tr><td>Гость B</td><td>Кафе</td><td>650 ₽</td><td>Обед</td><td>Чизкейк</td></tr>
+              <tr><td>Гость C</td><td>Ресторан</td><td>2 400 ₽</td><td>Компания</td><td>Сет закусок</td></tr>
+              <tr><td>Гость D</td><td>Кофейня</td><td>390 ₽</td><td>Капучино</td><td>Круассан</td></tr>
             </tbody>
           </table>
         </div>
@@ -120,25 +168,25 @@
       <section class="grid two">
         <article class="panel">
           <span class="panel-label">Товары для допродажи</span>
-          <h2>Приоритетные позиции</h2>
+          <h2>Учебные позиции</h2>
           <ul class="list">
-            <li><strong>Куриные крылья</strong><span>350 ₽ · IPA · кухня</span></li>
-            <li><strong>Сырные палочки</strong><span>460 ₽ · лагер · закуска</span></li>
-            <li><strong>Мясная доска</strong><span>1 200 ₽ · компания · высокий чек</span></li>
-            <li><strong>Дегустационный сет</strong><span>650 ₽ · новый опыт · высокая маржа</span></li>
+            <li><strong>Куриные крылья</strong><span>350 ₽ · бар · кухня</span></li>
+            <li><strong>Чизкейк</strong><span>290 ₽ · кафе · десерт</span></li>
+            <li><strong>Сет закусок</strong><span>1 200 ₽ · ресторан · компания</span></li>
+            <li><strong>Круассан</strong><span>180 ₽ · кофейня · выпечка</span></li>
           </ul>
         </article>
 
         <article class="panel">
-          <span class="panel-label">Эффективность барменов</span>
+          <span class="panel-label">Эффективность сотрудников</span>
           <h2>Сегодня</h2>
           <div class="table-wrap compact">
             <table>
-              <thead><tr><th>Бармен</th><th>Предложил</th><th>Купил</th><th>Сумма</th></tr></thead>
+              <thead><tr><th>Сотрудник</th><th>Предложил</th><th>Купил</th><th>Сумма</th></tr></thead>
               <tbody>
-                <tr><td>Иван</td><td>6</td><td>3</td><td>1 110 ₽</td></tr>
-                <tr><td>Мария</td><td>3</td><td>1</td><td>410 ₽</td></tr>
-                <tr><td>Олег</td><td>2</td><td>0</td><td>0 ₽</td></tr>
+                <tr><td>Сотрудник 1</td><td>6</td><td>3</td><td>1 110 ₽</td></tr>
+                <tr><td>Сотрудник 2</td><td>3</td><td>1</td><td>410 ₽</td></tr>
+                <tr><td>Сотрудник 3</td><td>2</td><td>0</td><td>0 ₽</td></tr>
               </tbody>
             </table>
           </div>

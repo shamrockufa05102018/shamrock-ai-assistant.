@@ -139,6 +139,13 @@ button {
   padding: 22px;
 }
 
+.subpanel {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #f9fbfa;
+}
+
 .panel h2 {
   margin: 6px 0 10px;
   font-size: 24px;
@@ -204,9 +211,43 @@ blockquote {
   gap: 10px;
 }
 
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
 button {
   padding: 11px 14px;
   font-size: 14px;
+}
+
+.scenario-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-height: 86px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+  color: var(--ink);
+  text-align: left;
+}
+
+.scenario-card span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.scenario-card.is-active {
+  background: var(--mint);
+  border-color: #b8e5cd;
+}
+
+.recommendation-grid {
+  margin-top: 18px;
 }
 
 button:hover,
@@ -277,6 +318,10 @@ th {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .scenario-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .two {
     grid-template-columns: 1fr;
   }
@@ -300,7 +345,8 @@ th {
 
 @media (max-width: 440px) {
   .metrics,
-  .guest-facts {
+  .guest-facts,
+  .scenario-grid {
     grid-template-columns: 1fr;
   }
 }
